@@ -11,8 +11,10 @@
     "format": "prettier 'src/**/*.ts' --write --config .prettierrc"
   },
   "dependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "eslint": "^9.20.1",
     "eslint-config-prettier": "^10.0.1",
