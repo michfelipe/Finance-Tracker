@@ -4,16 +4,16 @@ import { Dashboard } from './pages/dashboard';
 import { Auth } from './pages/auth';
 
 function App() {
-  return (
-    <Router>
-      <div className="app-container">
-        <Routes>
-          <Route path="/" element={<Dashboard />}></Route>
-          <Route path="/auth" element={<Auth />}></Route>
-        </Routes>
-      </div>
-    </Router>
-  );
+    return (
+        <Router>
+            <div className="app-container">
+                <Routes>
+                    <Route path="/" element={<Dashboard />}></Route>
+                    <Route path="/auth" element={<Auth />}></Route>
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
