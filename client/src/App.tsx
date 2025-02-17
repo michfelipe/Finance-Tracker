@@ -1,9 +1,9 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { Dashboard } from './pages/dashboard';
 import { Auth } from './pages/auth';
 import { FinancialRecordsProvider } from './contexts/financial-record-context';
-import { SignedIn, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 
 const darkTheme = createTheme({
@@ -21,9 +21,12 @@ function App() {
                     <div className="navbar">
                         <Link to="/">Dashboard</Link>
                         <SignedIn>
-                            <UserButton showName />
+                            <UserButton />
                         </SignedIn>
                     </div>
+                    <SignedOut>
+                        <Navigate to="/auth" />
+                    </SignedOut>
                     <Routes>
                         <Route
                             path="/"
