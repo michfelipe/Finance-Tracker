@@ -63,7 +63,7 @@ export const FinancialRecordForm = () => {
                 <Grid size={8}>
                     <Item>
                         <FormControl fullWidth required>
-                            <TextField id="description" label="Description" value={description} onChange={onDesciptionChange} />
+                            <TextField required id="description" label="Description" value={description} onChange={onDesciptionChange} />
                         </FormControl>
                     </Item>
                 </Grid>
@@ -71,6 +71,7 @@ export const FinancialRecordForm = () => {
                     <Item>
                         <FormControl fullWidth required>
                             <TextField
+                                required
                                 id="amount"
                                 type="number"
                                 label="Amount"
