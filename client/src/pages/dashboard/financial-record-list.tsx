@@ -3,12 +3,9 @@ import {
     DataGrid,
     GridActionsCellItem,
     GridActionsCellItemProps,
-    GridCellEditStopParams,
     GridColDef,
-    GridEventListener,
     GridRowId,
-    useGridApiRef
-} from '@mui/x-data-grid';
+    GridRowModel} from '@mui/x-data-grid';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -25,7 +22,7 @@ function DeleteRowActionItem({ deleteRow, ...props }: GridActionsCellItemProps &
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">Delete this user?</DialogTitle>
+                <DialogTitle id="alert-dialog-title">Delete this record?</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">This action cannot be undone.</DialogContentText>
                 </DialogContent>
@@ -50,14 +47,10 @@ function DeleteRowActionItem({ deleteRow, ...props }: GridActionsCellItemProps &
 export const FinancialRecordList = () => {
     const { records, updateRecord, deleteRecord } = useFinancialRecords();
 
-    const apiRef = useGridApiRef();
-    React.useEffect(() => {
-        const handleCellEditStop: GridEventListener<'cellEditStop'> = (params: GridCellEditStopParams) => {
-            const { row } = params;
-            updateRecord(row._id ?? '', row);
-        };
-        return apiRef.current.subscribeEvent('cellEditStop', handleCellEditStop);
-    }, [apiRef]);
+    const processRowUpdate = (newRow: GridRowModel): GridRowModel => {
+        updateRecord(newRow._id ?? '', newRow);
+        return newRow;
+    };
 
     const deleteRow = React.useCallback(
         (id: GridRowId) => () => {
@@ -86,13 +79,17 @@ export const FinancialRecordList = () => {
             field: 'category',
             headerName: 'Category',
             width: 150,
-            editable: true
+            editable: true,
+            type: 'singleSelect',
+            valueOptions: ['Food', 'Rent', 'Salary', 'Utilities', 'Entertainment', 'Other']
         },
         {
             field: 'paymentMethod',
             headerName: 'Payment Method',
             width: 150,
-            editable: true
+            editable: true,
+            type: 'singleSelect',
+            valueOptions: ['Credit Card', 'Cash', 'Bank Transfer']
         },
         {
             field: 'date',
@@ -109,13 +106,7 @@ export const FinancialRecordList = () => {
             type: 'actions',
             width: 80,
             getActions: (params) => [
-                <DeleteRowActionItem
-                    label="Delete"
-                    showInMenu
-                    icon={<DeleteIcon />}
-                    deleteRow={deleteRow(params.id)}
-                    closeMenuOnClick={false}
-                />
+                <DeleteRowActionItem label="Delete" icon={<DeleteIcon />} deleteRow={deleteRow(params.id)} closeMenuOnClick={false} />
             ]
         }
     ];
@@ -123,10 +114,10 @@ export const FinancialRecordList = () => {
     return (
         <Box sx={{ height: 400, width: '100%' }}>
             <DataGrid
-                apiRef={apiRef}
                 getRowId={(row) => row?._id}
                 rows={records}
                 columns={columns}
+                processRowUpdate={processRowUpdate}
                 initialState={{
                     pagination: {
                         paginationModel: {
@@ -135,8 +126,6 @@ export const FinancialRecordList = () => {
                     }
                 }}
                 pageSizeOptions={[5]}
-                checkboxSelection
-                disableRowSelectionOnClick
             />
         </Box>
     );

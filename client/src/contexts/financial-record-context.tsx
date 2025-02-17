@@ -33,7 +33,6 @@ export const FinancialRecordsProvider = ({ children }: { children: React.ReactNo
             if (response.ok) {
                 const records = await response.json();
                 setRecords(records);
-                console.log(records);
             }
         } catch (err) {
             console.error('Failed to fetch records: ', err);
