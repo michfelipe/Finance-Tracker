@@ -4,30 +4,40 @@ import { Dashboard } from './pages/dashboard';
 import { Auth } from './pages/auth';
 import { FinancialRecordsProvider } from './contexts/financial-record-context';
 import { SignedIn, UserButton } from '@clerk/clerk-react';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark'
+    }
+});
 
 function App() {
     return (
-        <Router>
-            <div className="app-container">
-                <div className="navbar">
-                    <Link to='/'>Dashboard</Link>
-                    <SignedIn>
-                        <UserButton showName/>
-                    </SignedIn>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <Router>
+                <div className="app-container">
+                    <div className="navbar">
+                        <Link to="/">Dashboard</Link>
+                        <SignedIn>
+                            <UserButton showName />
+                        </SignedIn>
+                    </div>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={
+                                <FinancialRecordsProvider>
+                                    <Dashboard />
+                                </FinancialRecordsProvider>
+                            }
+                        ></Route>
+                        <Route path="/auth" element={<Auth />}></Route>
+                    </Routes>
                 </div>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={
-                            <FinancialRecordsProvider>
-                                <Dashboard />
-                            </FinancialRecordsProvider>
-                        }
-                    ></Route>
-                    <Route path="/auth" element={<Auth />}></Route>
-                </Routes>
-            </div>
-        </Router>
+            </Router>
+        </ThemeProvider>
     );
 }
 

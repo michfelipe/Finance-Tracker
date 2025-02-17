@@ -1,4 +1,6 @@
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, InputAdornment, SelectChangeEvent } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import Item from '@mui/material/Grid2';
 import { useUser } from '@clerk/clerk-react';
 import { useState } from 'react';
 import { useFinancialRecords } from '../../contexts/financial-record-context';
@@ -50,51 +52,86 @@ export const FinancialRecordForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <FormControl fullWidth required>
-                <TextField id="description" label="Description" value={description} onChange={onDesciptionChange} />
-            </FormControl>
-            <FormControl fullWidth required>
-                <TextField
-                    id="amount"
-                    type="number"
-                    label="Amount"
-                    value={amount}
-                    onChange={onAmountChange}
-                    slotProps={{
-                        input: {
-                            startAdornment: <InputAdornment position="start">$</InputAdornment>
-                        }
-                    }}
-                />
-            </FormControl>
-            <FormControl fullWidth required>
-                <InputLabel id="category-label">Category</InputLabel>
-                <Select labelId="category-label" id="category-select" label="Category" value={category} onChange={onCategoryChange}>
-                    <MenuItem value={'Food'}>Food</MenuItem>
-                    <MenuItem value={'Rent'}>Rent</MenuItem>
-                    <MenuItem value={'Salary'}>Salary</MenuItem>
-                    <MenuItem value={'Utilities'}>Utilities</MenuItem>
-                    <MenuItem value={'Entertainement'}>Entertainement</MenuItem>
-                    <MenuItem value={'Other'}>Other</MenuItem>
-                </Select>
-            </FormControl>
-            <FormControl fullWidth required>
-                <InputLabel id="payment-label">Payment Method</InputLabel>
-                <Select
-                    labelId="payment-label"
-                    id="payment-select"
-                    label="Payment Method"
-                    value={paymentMethod}
-                    onChange={onPaymentMethodChange}
-                >
-                    <MenuItem value={'Credit Card'}>Credit Card</MenuItem>
-                    <MenuItem value={'Cash'}>Cash</MenuItem>
-                    <MenuItem value={'Bank Transfer'}>Bank Transfer</MenuItem>
-                </Select>
-            </FormControl>
-            <Button variant="contained" color="primary" type="submit">
-                Add Record
-            </Button>
+            <Grid
+                sx={{
+                    justifyContent: 'center',
+                    alignItems: 'flex-end'
+                }}
+                container
+                rowSpacing={1}
+            >
+                <Grid size={8}>
+                    <Item>
+                        <FormControl fullWidth required>
+                            <TextField id="description" label="Description" value={description} onChange={onDesciptionChange} />
+                        </FormControl>
+                    </Item>
+                </Grid>
+                <Grid size={8}>
+                    <Item>
+                        <FormControl fullWidth required>
+                            <TextField
+                                id="amount"
+                                type="number"
+                                label="Amount"
+                                value={amount}
+                                onChange={onAmountChange}
+                                slotProps={{
+                                    input: {
+                                        startAdornment: <InputAdornment position="start">$</InputAdornment>
+                                    }
+                                }}
+                            />
+                        </FormControl>
+                    </Item>
+                </Grid>
+                <Grid size={8}>
+                    <Item>
+                        <FormControl fullWidth required>
+                            <InputLabel id="category-label">Category</InputLabel>
+                            <Select
+                                labelId="category-label"
+                                id="category-select"
+                                label="Category"
+                                value={category}
+                                onChange={onCategoryChange}
+                            >
+                                <MenuItem value={'Food'}>Food</MenuItem>
+                                <MenuItem value={'Rent'}>Rent</MenuItem>
+                                <MenuItem value={'Salary'}>Salary</MenuItem>
+                                <MenuItem value={'Utilities'}>Utilities</MenuItem>
+                                <MenuItem value={'Entertainement'}>Entertainement</MenuItem>
+                                <MenuItem value={'Other'}>Other</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Item>
+                </Grid>
+                <Grid size={8}>
+                    <Item>
+                        <FormControl fullWidth required>
+                            <InputLabel id="payment-label">Payment Method</InputLabel>
+                            <Select
+                                labelId="payment-label"
+                                id="payment-select"
+                                label="Payment Method"
+                                value={paymentMethod}
+                                onChange={onPaymentMethodChange}
+                            >
+                                <MenuItem value={'Credit Card'}>Credit Card</MenuItem>
+                                <MenuItem value={'Cash'}>Cash</MenuItem>
+                                <MenuItem value={'Bank Transfer'}>Bank Transfer</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Item>
+                </Grid>
+                <Grid size={8}>
+                    <Item>
+                        <Button variant="contained" color="primary" type="submit">
+                            Add Record
+                        </Button>
+                    </Item>
+                </Grid>
+            </Grid>
         </form>
     );
 };

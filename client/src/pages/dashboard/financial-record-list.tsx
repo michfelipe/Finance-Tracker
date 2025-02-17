@@ -73,7 +73,7 @@ export const FinancialRecordList = () => {
                     </button>
                 )
             }
-        ], 
+        ],
         [records]
     );
 
